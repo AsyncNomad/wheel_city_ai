@@ -8,7 +8,7 @@
 
 1. **1단계: 객체 탐지 (YOLOv8)**
     - 사용자가 `test_images` 폴더에 이미지를 입력하면, 사전 학습된 **YOLOv8s 모델**이 먼저 작동합니다.
-    - 모델은 이미지 내에서 휠체어 접근성의 핵심 요소인 **턱/계단(curb)**과 **경사로(ramp)**를 신속하게 탐지합니다.
+    - 모델은 이미지 내에서 휠체어 접근성의 핵심 요소인 턱/계단(curb)과 경사로(ramp)를 탐지합니다.
     - 탐지된 객체에는 바운딩 박스(Bounding Box)가 표시되며, 이 시각화된 이미지는 LLaVA-1.6에 input으로 전달됩니다.
 2. **2단계: 종합 판단 (LLaVA-1.6)**
     - 1단계에서 생성된 바운딩 박스 이미지를 **LLaVA-1.6 모델**이 입력받습니다.
@@ -17,7 +17,7 @@
 
 ---
 
-## 🤖 사용 모델 (Models Used)
+## 사용 모델 (Models Used)
 
 | 역할 | 모델 이름 | 상세 정보 |
 | --- | --- | --- |
@@ -26,9 +26,10 @@
 
 ---
 
-## 📂 디렉토리 구조
+## 디렉토리 구조
 
-`wheel_city_ai/
+```bash
+wheel_city_ai/
 ├── yolov8/                   # YOLOv8 모델을 위한 프로젝트 폴더
 │   ├── test_images/          # 1. 사용자가 원본 이미지를 넣는 곳(YOLOv8's input)
 │   ├── test_results/         # 2. YOLOv8의 분석 결과(이미지)가 저장되는 곳(YOLOv8's output)
@@ -42,11 +43,12 @@
 │   └── ...                   # (모델 가중치 등)
 │
 ├── run_pipeline.sh           # (선택사항) 전체 파이프라인을 한번에 실행하는 셔ㄹ 스크립트
-└── README.md                 # 프로젝트 설명서 (현재 파일)`
+└── README.md                 # 프로젝트 설명서 (현재 파일)
+```
 
 ---
 
-## 🚀 사용 방법
+## 사용 방법
 
 1. **이미지 입력:**
     - `yolov8/test_images/` 폴더에 분석하고 싶은 건물 입구 이미지를 넣습니다.
@@ -57,7 +59,7 @@
     - `yolov8/test_results/visualizations/` 폴더에 있는 결과 이미지들을 `llava-1.6-7b/test_images/` 폴더로 **복사**합니다.
     - `llava-1.6-7b` 폴더로 이동하여 `run_model_analyze.py` 스크립트를 실행합니다.
 4. **결과 확인:**
-    - 최종 분석 결과는 `llava-1.6-7b/test_results/` 폴더 안의 **`results.json` 파일**에서 확인할 수 있습니다.
+    - 최종 분석 결과는 `llava-1.6-7b/test_results/` 폴더 안의 `results.json` 파일에서 확인할 수 있습니다.
 
 ---
 
@@ -65,13 +67,13 @@
 
 1. input 이미지 준비
 
-![data1.jpg](attachment:e020c07f-969f-4d70-9195-49c5b8fa777a:data1.jpg)
+ <img src="https://github.com/user-attachments/assets/58d210dc-d75a-4fa5-b0d0-7a3e4660ed41" width="400" height="600"/>
 
-1. YOLOv8s가 턱과 경사로를 감지하여 핀
+2. YOLOv8s가 턱과 경사로를 감지하여 핀
 
-![annotated_data1.jpg](attachment:2b8e51f6-cb8f-4453-9ab4-c24319ec5bad:annotated_data1.jpg)
+ <img src="https://github.com/user-attachments/assets/f514953d-f931-42ca-84d9-ed8f292fa24a" width="400" height="600"/>
 
-1. LLaVA가 상황을 판단하여 최종 의사결정, 스크립트를 통해 JSON으로 파싱
+3. LLaVA가 상황을 판단하여 최종 의사결정, 스크립트를 통해 JSON으로 파싱
 
 ```json
 [
@@ -105,7 +107,7 @@ LLaVA 모델의 4비트 양자화를 위해서는 NVIDIA GPU와 CUDA 환경이 �
 
 ### 3. 프로젝트 및 Python 패키지 설치
 
-1. **Git 리포지토리 복제:**Bash
+1. Git 리포지토리 복제: Bash
     
     ```bash
     git clone ~~
@@ -132,6 +134,26 @@ LLaVA 모델의 4비트 양자화를 위해서는 NVIDIA GPU와 CUDA 환경이 �
         pip install transformers bitsandbytes accelerate Pillow
         ```
         
+
+### 4. Huggingface에서 LLaVA 다운로드, 양자화
+
+1. LLaVA-1.6-7B 모델 로컬에 설치
+    
+    ```bash
+    huggingface-cli download llava-hf/llava-v1.6-mistral-7b-hf
+    ```
+    
+2. bitsandbytes 4bit 양자화 스크립트 실행
+    
+    ```bash
+    cd llava-1.6-7b
+    python3 -m venv .venv
+    source .venv/bin/activate
+    python quantize.py
+    ```
+    
+    자동으로 llava-1.6-7b/quantized 디렉토리가 생성되고 양자화된 모델 정보가 저장됩니다. 이제 전체 모델을 실행할 준비를 마쳤습니다.
+    
 
 ---
 
