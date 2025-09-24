@@ -80,7 +80,7 @@ wheel_city_ai/
   {
     "image": "test_images/annotated_data1.jpg",
     "accessible": true,
-    "reason": "Although a curve exists between the ground and the entrance to the store, a wheelchair can pass through through the ramp."
+    "reason": "Although a curb exists between the ground and the entrance to the store, a wheelchair can pass through through the ramp."
   }
 ]
 ```
