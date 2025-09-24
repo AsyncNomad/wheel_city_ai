@@ -1,0 +1,30 @@
+# Python Virtual Environments
+# 각 하위 프로젝트의 가상환경 폴더를 제외합니다.
+yolov8/.venv/
+llava-1.6-7b/.venv/
+
+# YOLOv8 Generated Directories
+# 데이터셋과 학습 결과물은 용량이 크고 재생성 가능하므로 제외합니다.
+yolov8/datasets/
+yolov8/images/
+yolov8/test_results/
+
+# LLaVA Generated Directories
+# 모델 분석 결과물을 제외합니다.
+llava-1.6-7b/test_results/
+llava-1.6-7b/quantized/
+
+# Python Cache Files
+# 파이썬 실행 시 자동으로 생성되는 캐시 파일들을 제외합니다.
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# OS & IDE Specific Files
+# 운영체제나 코드 에디터가 자동으로 생성하는 설정 파일들을 제외합니다.
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.suo

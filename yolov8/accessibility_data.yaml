@@ -1,0 +1,9 @@
+# 학습 및 검증 이미지 폴더 경로
+train: ./datasets/train/images
+val: ./datasets/val/images
+
+# 클래스 수
+nc: 2
+
+# 클래스 이름 (ID 0부터 순서대로)
+names: ['curb', 'ramp']
